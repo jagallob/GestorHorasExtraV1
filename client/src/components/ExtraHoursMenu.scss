@@ -251,17 +251,27 @@ body {
   width: 3rem;
   height: 3rem;
   border-radius: 0.5rem;
-  background-color: #232946;
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue),
+    var(--primary-blue-light)
+  );
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 1px 4px rgba(44, 62, 80, 0.13);
   transition: var(--transition);
+
+  &:hover {
+    background: linear-gradient(135deg, var(--primary-blue-light), #60a5fa);
+    transform: scale(1.08);
+  }
 }
 
 .menu-icon {
   color: #f4f6fb;
   font-size: 1.5rem;
+  transition: all 0.3s ease;
 }
 
 .text-section {
