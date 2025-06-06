@@ -1,6 +1,4 @@
 import dayjs from "dayjs";
-import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
-import { Tag } from "antd";
 
 export const columns = [
   {
@@ -99,12 +97,9 @@ export const columns = [
     key: "status",
     width: 120,
     render: (approved) => (
-      <Tag
-        color={approved ? "success" : "warning"}
-        icon={approved ? <CheckCircleOutlined /> : <CloseCircleOutlined />}
-      >
+      <span className={`status-badge ${approved ? "approved" : "pending"}`}>
         {approved ? "Aprobado" : "Pendiente"}
-      </Tag>
+      </span>
     ),
     filters: [
       { text: "Aprobado", value: true },
