@@ -11,11 +11,11 @@ import {
 } from "antd";
 import {
   DownloadOutlined,
-  SearchOutlined,
   EditOutlined,
   FilterOutlined,
   BarChartOutlined,
   TableOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { findEmployee } from "../../services/employeeService";
@@ -245,12 +245,15 @@ export const ReportInfo = () => {
         <div className="filters-container">
           <div className="search-container">
             {role !== "empleado" && (
-              <Input.Search
+              <Input
                 placeholder="Ingrese ID del empleado"
-                onSearch={handleSearch}
                 onChange={(e) => setSearchValue(e.target.value)}
                 value={searchValue}
-                prefix={<SearchOutlined />}
+                prefix={
+                  <UserOutlined style={{ color: "#e0e6ed", fontSize: 18 }} />
+                }
+                className="employee-search-input"
+                onPressEnter={handleSearch}
               />
             )}
           </div>

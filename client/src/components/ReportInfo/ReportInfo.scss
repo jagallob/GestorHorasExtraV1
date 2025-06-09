@@ -39,10 +39,33 @@
         .search-container {
           min-width: 240px;
 
-          input {
+          .employee-search-input {
             background: #379ef3;
-            color: #fff;
             border: 1px solid #b6d6f7;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 15px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            .ant-input-prefix {
+              display: flex;
+              align-items: center;
+              margin-right: 6px;
+              color: #2563eb;
+              font-size: 18px;
+            }
+            &::placeholder {
+              color: #e0e6ed;
+              opacity: 1;
+            }
+          }
+          // Selector específico para el input de Ant Design
+          .ant-input {
+            &::placeholder {
+              color: #e0e6ed;
+              opacity: 1;
+            }
           }
         }
 
@@ -53,26 +76,14 @@
 
           .ant-picker {
             background: #379ef3;
-            color: #fff;
             border: 1px solid #b6d6f7;
-          }
-
-          .search-button {
-            background: linear-gradient(
-              135deg,
-              var(--primary-blue),
-              var(--primary-blue-light)
-            );
-            border: none;
             color: #fff;
-
-            &:hover {
-              background: linear-gradient(
-                135deg,
-                var(--primary-blue),
-                var(--primary-blue-light)
-              );
-              opacity: 0.9;
+            .ant-picker-input > input {
+              color: #fff;
+              &::placeholder {
+                color: #e0e6ed;
+                opacity: 1;
+              }
             }
           }
         }
@@ -143,7 +154,7 @@
             color: #fff;
           }
 
-          // Fila de la cabecera según estado (no aplica, pero para consistencia visual)
+          // Fila de la cabecera según estado
           .ant-table-tbody > tr.table-row-approved > td {
             background: #8cb7f0;
           }
@@ -297,6 +308,11 @@
 
     span {
       color: #fff;
+    }
+
+    // Oculta el input de salto de página en la paginación
+    .ant-pagination-options {
+      display: none;
     }
   }
 }
