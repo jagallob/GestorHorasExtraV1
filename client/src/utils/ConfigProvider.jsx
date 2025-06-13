@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import ConfigContext from "./ConfigContext";
+import { API_CONFIG } from "../environments/api.config";
 
 export const ConfigProvider = ({ children }) => {
   const [config, setConfig] = useState(null);
@@ -15,7 +16,7 @@ export const ConfigProvider = ({ children }) => {
           throw new Error("No token found in localStorage.");
         }
 
-        const response = await axios.get("https://localhost:7086/api/config", {
+        const response = await axios.get(`${API_CONFIG.BASE_URL}/api/config`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
