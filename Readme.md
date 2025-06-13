@@ -3,12 +3,13 @@
 ## Tabla de Contenidos
 
 1. [Introducción](#proyecto-de-gestion-de-horas-extra)
-2. [Estructura del Proyecto](#estructura-del-proyecto)
-3. [Requisitos Previos](#requisitos-previos)
-4. [Instalación y Configuración](#instalacion-y-configuracion)
+2. [Dockerización y despliegue rápido](#dockerización-y-despliegue-rápido)
+3. [Estructura del Proyecto](#estructura-del-proyecto)
+4. [Requisitos Previos](#requisitos-previos)
+5. [Instalación y Configuración Manual](#instalacion-y-configuracion)
    - [Frontend (React)](#frontend-react)
    - [Backend (C#)](#backend-c)
-5. [Funcionalidades Principales](#funcionalidades-principales)
+6. [Funcionalidades Principales](#funcionalidades-principales)
    - [Sistema de Horas Extra](#sistema-de-horas-extra)
    - [Cálculo automático categorizado](#calculo-automatico-categorizado)
    - [Sistema de aprobación](#sistema-de-aprobacion)
@@ -23,28 +24,61 @@
    - [Gestión de Managers](#gestion-de-managers)
    - [Panel de Configuración del Sistema](#panel-de-configuracion-del-sistema)
    - [Menú Principal Adaptativo](#menu-principal-adaptativo)
-6. [Detalles Técnicos](#detalles-tecnicos)
+7. [Detalles Técnicos](#detalles-tecnicos)
    - [Frontend](#frontend)
    - [Backend](#backend)
-7. [Generación de Migraciones](#generacion-de-migraciones)
-8. [Despliegue](#despliegue)
+8. [Generación de Migraciones](#generacion-de-migraciones)
+9. [Despliegue](#despliegue)
    - [Frontend](#frontend-1)
    - [Backend](#backend-1)
-9. [Estructura de Directorios Recomendada](#estructura-de-directorios-recomendada)
-10. [Flujo de Trabajo](#flujo-de-trabajo)
-11. [Solución de Problemas Comunes](#solucion-de-problemas-comunes)
+10. [Estructura de Directorios Recomendada](#estructura-de-directorios-recomendada)
+11. [Flujo de Trabajo](#flujo-de-trabajo)
+12. [Solución de Problemas Comunes](#solucion-de-problemas-comunes)
     - [Errores de migración de base de datos](#errores-de-migracion-de-base-de-datos)
     - [Problemas con el frontend](#problemas-con-el-frontend)
     - [Problemas con la autenticación](#problemas-con-la-autenticacion)
-12. [Contribución](#contribucion)
+13. [Contribución](#contribucion)
 
-Este proyecto es una aplicación para la gestión de horas extra, su objetivo es automatizar y optimizar el proceso de registro, aprobación, actualización y eliminación de horas extra. Esta herramienta permitirá a los empleados, gerentes y administradores manejar de manera eficiente las horas extra trabajadas, entregando informes y asegurando una correcta compensación, cumpliendo con las politicas laborales vigentes.
+---
 
-Esta diseñado para ser usado por 3 roles:
+> **Nota:** Este proyecto puede ejecutarse de dos formas:
+>
+> - **Dockerización y despliegue rápido:** Recomendado para desarrollo y producción, levanta todo el stack con un solo comando.
+> - **Instalación y configuración manual:** Si prefieres instalar dependencias y servicios por separado, sigue la sección correspondiente.
 
-- Empleado
-- Manager
-- Superusuario
+## Dockerización y despliegue rápido
+
+Este proyecto está completamente dockerizado. Puedes levantar el frontend, backend y base de datos con un solo comando usando Docker Compose.
+
+### ¿Qué incluye la configuración Docker?
+
+1. **Dockerización completa:**
+   - `Dockerfile` para backend (.NET) y frontend (Vite + React).
+   - `docker-compose.yml` para orquestar backend, frontend y PostgreSQL.
+2. **Variables de entorno:**
+   - Centralizadas en `.env` para base de datos, JWT y correo.
+   - El backend toma la cadena de conexión y configuraciones sensibles desde variables de entorno.
+3. **Base de datos y datos iniciales:**
+   - Servicio PostgreSQL en Docker.
+   - Backup SQL en `db-backup/backup.sql` para poblar la base de datos automáticamente al iniciar el contenedor.
+4. **Frontend:**
+   - Configuración para que la URL de la API se tome de variables de entorno y use HTTP en desarrollo.
+   - Sin referencias fijas a URLs en el código fuente.
+5. **Flujo de trabajo con Git:**
+   - Cambios subidos a la rama `docker-setup`.
+
+### ¿Cómo levantar el proyecto?
+
+1. Clona el repositorio y sitúate en la raíz del proyecto.
+2. Ejecuta:
+   ```bash
+   docker-compose up --build
+   ```
+3. Accede a:
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:7086
+
+Para más detalles, revisa la sección de despliegue o consulta este README.
 
 ## Estructura del Proyecto
 
@@ -565,11 +599,12 @@ proyecto-horas-extra/
    - El empleado o superusuario accede al formulario de registro
    - Selecciona fecha, hora de inicio y fin
    - El sistema calcula automáticamente la distribución de horas usando el servicio `ExtraHourCalculationService`:
+
      - Determina si la fecha corresponde a un día festivo usando `ColombianHolidayService`
      - Distribuye las horas en las categorías correspondientes (diurna, nocturna, diurna festiva, nocturna festiva)
      - Maneja correctamente las transiciones entre periodos diurnos y nocturnos
      - Calcula con precisión hora por hora incluso cuando el registro cruza diferentes categorías
-   
+
    - Se agregan observaciones si es necesario
    - Se envía el formulario
 
