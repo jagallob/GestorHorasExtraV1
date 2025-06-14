@@ -33,11 +33,12 @@
    - [Backend](#backend-1)
 10. [Estructura de Directorios Recomendada](#estructura-de-directorios-recomendada)
 11. [Flujo de Trabajo](#flujo-de-trabajo)
-12. [Solución de Problemas Comunes](#solucion-de-problemas-comunes)
+12. [Pruebas Unitarias](#pruebas-unitarias)
+13. [Solución de Problemas Comunes](#solucion-de-problemas-comunes)
     - [Errores de migración de base de datos](#errores-de-migracion-de-base-de-datos)
     - [Problemas con el frontend](#problemas-con-el-frontend)
     - [Problemas con la autenticación](#problemas-con-la-autenticacion)
-13. [Contribución](#contribucion)
+14. [Contribución](#contribucion)
 
 ---
 
@@ -703,6 +704,8 @@ Si encuentras errores al ejecutar las migraciones:
 - Si el token expira continuamente, verifica la configuración de refresh token
 - Comprueba que el email utilizado en el login existe en el sistema
 
+> Nota: Todas las dependencias necesarias para las pruebas (como xUnit y NSubstitute) se restauran automáticamente al ejecutar `dotnet restore`. No es necesario instalarlas manualmente.
+
 ## Contribución
 
 Para contribuir al proyecto:
@@ -711,3 +714,30 @@ Para contribuir al proyecto:
 2. Realiza tus cambios y haz commit (`git commit -m 'Añadir nueva funcionalidad'`)
 3. Envía tu rama (`git push origin feature/nueva-funcionalidad`)
 4. Abre un Pull Request
+
+## Pruebas Unitarias
+
+El proyecto incluye pruebas unitarias para la lógica de cálculo de horas extra, ubicadas en `ExtraHours.API.Tests`.
+
+### Ejecución de tests
+
+Puedes ejecutar todas las pruebas con:
+
+```bash
+dotnet test
+```
+
+O desde el panel de Testing de Visual Studio Code si tienes instalada la extensión C# Dev Kit.
+
+### Requisitos para ejecutar las pruebas
+
+- Tener instalado [.NET SDK 9.0](https://dotnet.microsoft.com/download) o superior.
+- (Opcional) Para una mejor experiencia en Visual Studio Code, instalar la extensión **C# Dev Kit**.
+
+### Escenarios cubiertos
+- Cálculo de horas extra diurnas y nocturnas en días laborales, domingos y festivos.
+- Casos donde el rango horario cruza la medianoche, dividiendo correctamente el cálculo en dos días distintos.
+- Validación de la lógica de negocio para reportes diarios, asegurando que las horas se asignen al día correspondiente (festivo o no festivo).
+- Pruebas de casos límite, como rangos fraccionarios y validaciones de configuración nula o rangos inválidos.
+
+Estas pruebas garantizan la robustez y exactitud del sistema de cálculo de horas extra.
