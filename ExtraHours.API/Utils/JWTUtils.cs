@@ -49,8 +49,8 @@ namespace ExtraHours.API.Utils
             {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddMilliseconds(expiration),
-                Issuer = "ExtraHoursAPI",
-                Audience = "ExtraHoursClient",
+                Issuer = "ExtraHours.API",
+                Audience = "ExtraHours.Client",
                 SigningCredentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256Signature)
             };
             var tokenHandler = new JwtSecurityTokenHandler();

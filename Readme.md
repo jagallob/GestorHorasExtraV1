@@ -54,24 +54,33 @@ Este proyecto está completamente dockerizado. Puedes levantar el frontend, back
 ### ¿Qué incluye la configuración Docker?
 
 1. **Dockerización completa:**
-   * `Dockerfile` para backend (.NET) y frontend (Vite + React).
-   * `docker-compose.yml` para orquestar backend, frontend y PostgreSQL.
+
+   - `Dockerfile` para backend (.NET) y frontend (Vite + React).
+   - `docker-compose.yml` para orquestar backend, frontend y PostgreSQL.
 
 2. **Variables de entorno:**
-   * Deben ser centralizadas en `.env` para base de datos, JWT y correo.
-   * El backend toma la cadena de conexión y configuraciones sensibles desde variables de entorno.
+
+   - Deben ser centralizadas en `.env` para base de datos, JWT y correo.
+   - El backend toma la cadena de conexión y configuraciones sensibles desde variables de entorno.
 
 3. **Base de datos y datos iniciales:**
-   * Servicio PostgreSQL en Docker.
-   * Backup SQL en `db-backup/backup.sql` para poblar la base de datos automáticamente al iniciar el contenedor.
+
+   - Servicio PostgreSQL en Docker.
+   - Backup SQL en `db-backup/backup.sql` para poblar la base de datos automáticamente al iniciar el contenedor.
+   - Si la base de datos no existe, créala y restaura el backup manualmente con:
+     ```bash
+     docker exec -i gestorhorasextrav1-db-1 psql -U postgres -c "CREATE DATABASE extrahours;"
+     docker exec -i gestorhorasextrav1-db-1 psql -U postgres -d extrahours < db-backup/backup.sql
+     ```
 
 4. **Frontend:**
-   * Configuración para que la URL de la API se tome de variables de entorno y use HTTP en desarrollo.
-   * Sin referencias fijas a URLs en el código fuente.
+   - Configuración para que la URL de la API se tome de variables de entorno y use HTTP en desarrollo.
+   - Sin referencias fijas a URLs en el código fuente.
 
 ### ¿Cómo levantar el proyecto?
 
 #### 1. Clona el repositorio y sitúate en la raíz del proyecto
+
 ```bash
 git clone https://github.com/jagallob/GestorHorasExtraV1.git
 cd GestorHorasExtraV1
@@ -82,6 +91,7 @@ cd GestorHorasExtraV1
 ## Crea y edita el archivo .env con tus valores específicos
 
 **Variables que debes configurar en `.env`:**
+
 ```bash
 # Configuración de Base de Datos
 DB_HOST=db
@@ -90,7 +100,7 @@ DB_NAME=extrahours
 DB_USER=postgres
 DB_PASSWORD=tu_password_aqui          # ⚠️ CAMBIAR
 
-# Configuración JWT 
+# Configuración JWT
 JWT_SECRET=tu_clave_secreta_jwt_aqui   # ⚠️ CAMBIAR (mínimo 32 caracteres)
 JWT_ISSUER=ExtraHours.API
 JWT_AUDIENCE=ExtraHours.Client
@@ -100,17 +110,20 @@ JWT_EXPIRES_IN_MINUTES=60
 ASPNETCORE_ENVIRONMENT=Development
 ```
 
-> **⚠️ Importante:** 
+> **⚠️ Importante:**
+>
 > - Cambia `DB_PASSWORD` por una contraseña segura
 > - Genera una `JWT_SECRET` única y segura (puedes usar: `openssl rand -base64 32`)
 > - **Nunca compartas tu archivo `.env`** - contiene información sensible
 
 #### 3. Levanta los servicios
+
 ```bash
 docker-compose up --build
 ```
 
 #### 4. Accede a la aplicación
+
 Una vez que todos los contenedores estén ejecutándose:
 
 - **Frontend:** http://localhost:5173
@@ -144,13 +157,16 @@ docker-compose run test-backend
 ### Solución de problemas comunes
 
 **Error: "no configuration file provided"**
+
 - Verifica que estés en la raíz del proyecto donde está `docker-compose.yml`
 
 **Error de conexión a base de datos:**
+
 - Verifica que tu archivo `.env` tenga las variables correctas
 - Asegúrate de que el puerto 5432 no esté ocupado por otra instancia de PostgreSQL
 
 **El frontend no puede conectar con el backend:**
+
 - Verifica que todos los contenedores estén ejecutándose: `docker-compose ps`
 - Revisa los logs: `docker-compose logs backend`
 
@@ -808,6 +824,7 @@ O desde el panel de Testing de Visual Studio Code si tienes instalada la extensi
 - (Opcional) Para una mejor experiencia en Visual Studio Code, instalar la extensión **C# Dev Kit**.
 
 ### Escenarios cubiertos
+
 - Cálculo de horas extra diurnas y nocturnas en días laborales, domingos y festivos.
 - Casos donde el rango horario cruza la medianoche, dividiendo correctamente el cálculo en dos días distintos.
 - Validación de la lógica de negocio para reportes diarios, asegurando que las horas se asignen al día correspondiente (festivo o no festivo).
