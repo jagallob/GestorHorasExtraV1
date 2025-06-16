@@ -54,32 +54,105 @@ Este proyecto está completamente dockerizado. Puedes levantar el frontend, back
 ### ¿Qué incluye la configuración Docker?
 
 1. **Dockerización completa:**
-   - `Dockerfile` para backend (.NET) y frontend (Vite + React).
-   - `docker-compose.yml` para orquestar backend, frontend y PostgreSQL.
+   * `Dockerfile` para backend (.NET) y frontend (Vite + React).
+   * `docker-compose.yml` para orquestar backend, frontend y PostgreSQL.
+
 2. **Variables de entorno:**
-   - Centralizadas en `.env` para base de datos, JWT y correo.
-   - El backend toma la cadena de conexión y configuraciones sensibles desde variables de entorno.
+   * Deben ser centralizadas en `.env` para base de datos, JWT y correo.
+   * El backend toma la cadena de conexión y configuraciones sensibles desde variables de entorno.
+
 3. **Base de datos y datos iniciales:**
-   - Servicio PostgreSQL en Docker.
-   - Backup SQL en `db-backup/backup.sql` para poblar la base de datos automáticamente al iniciar el contenedor.
+   * Servicio PostgreSQL en Docker.
+   * Backup SQL en `db-backup/backup.sql` para poblar la base de datos automáticamente al iniciar el contenedor.
+
 4. **Frontend:**
-   - Configuración para que la URL de la API se tome de variables de entorno y use HTTP en desarrollo.
-   - Sin referencias fijas a URLs en el código fuente.
-5. **Flujo de trabajo con Git:**
-   - Cambios subidos a la rama `docker-setup`.
+   * Configuración para que la URL de la API se tome de variables de entorno y use HTTP en desarrollo.
+   * Sin referencias fijas a URLs en el código fuente.
 
 ### ¿Cómo levantar el proyecto?
 
-1. Clona el repositorio y sitúate en la raíz del proyecto.
-2. Ejecuta:
-   ```bash
-   docker-compose up --build
-   ```
-3. Accede a:
-   - Frontend: http://localhost:5173
-   - Backend API: http://localhost:7086
+#### 1. Clona el repositorio y sitúate en la raíz del proyecto
+```bash
+git clone https://github.com/jagallob/GestorHorasExtraV1.git
+cd GestorHorasExtraV1
+```
 
-Para más detalles, revisa la sección de despliegue o consulta este README.
+#### 2. Configura las variables de entorno
+
+# Crea y edita el archivo .env con tus valores específicos
+
+**Variables que debes configurar en `.env`:**
+```bash
+# Configuración de Base de Datos
+DB_HOST=db
+DB_PORT=5432
+DB_NAME=extrahours
+DB_USER=postgres
+DB_PASSWORD=tu_password_aqui          # ⚠️ CAMBIAR
+
+# Configuración JWT 
+JWT_SECRET=tu_clave_secreta_jwt_aqui   # ⚠️ CAMBIAR (mínimo 32 caracteres)
+JWT_ISSUER=ExtraHours.API
+JWT_AUDIENCE=ExtraHours.Client
+JWT_EXPIRES_IN_MINUTES=60
+
+# Configuración del entorno
+ASPNETCORE_ENVIRONMENT=Development
+```
+
+> **⚠️ Importante:** 
+> - Cambia `DB_PASSWORD` por una contraseña segura
+> - Genera una `JWT_SECRET` única y segura (puedes usar: `openssl rand -base64 32`)
+> - **Nunca compartas tu archivo `.env`** - contiene información sensible
+
+#### 3. Levanta los servicios
+```bash
+docker-compose up --build
+```
+
+#### 4. Accede a la aplicación
+Una vez que todos los contenedores estén ejecutándose:
+
+- **Frontend:** http://localhost:5173
+- **Backend API:** http://localhost:7086
+- **Base de datos PostgreSQL:** localhost:5432
+
+### Comandos útiles
+
+```bash
+# Levantar en segundo plano
+docker-compose up -d --build
+
+# Ver logs de todos los servicios
+docker-compose logs
+
+# Ver logs de un servicio específico
+docker-compose logs backend
+docker-compose logs frontend
+docker-compose logs db
+
+# Parar todos los servicios
+docker-compose down
+
+# Parar y eliminar volúmenes (⚠️ elimina datos de BD)
+docker-compose down -v
+
+# Ejecutar tests del backend
+docker-compose run test-backend
+```
+
+### Solución de problemas comunes
+
+**Error: "no configuration file provided"**
+- Verifica que estés en la raíz del proyecto donde está `docker-compose.yml`
+
+**Error de conexión a base de datos:**
+- Verifica que tu archivo `.env` tenga las variables correctas
+- Asegúrate de que el puerto 5432 no esté ocupado por otra instancia de PostgreSQL
+
+**El frontend no puede conectar con el backend:**
+- Verifica que todos los contenedores estén ejecutándose: `docker-compose ps`
+- Revisa los logs: `docker-compose logs backend`
 
 ## Estructura del Proyecto
 
