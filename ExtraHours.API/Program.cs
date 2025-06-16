@@ -30,7 +30,11 @@ builder.Services.AddScoped<IExtraHoursConfigRepository, ExtraHoursConfigReposito
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IExtraHourService, ExtraHourService>();
-builder.Services.AddSingleton<IJWTUtils, JWTUtils>();
+builder.Services.AddSingleton<IJWTUtils, JWTUtils>(provider =>
+{
+    var configuration = provider.GetRequiredService<IConfiguration>();
+    return new JWTUtils(configuration);
+});
 builder.Services.AddScoped<IExtraHoursConfigService, ExtraHoursConfigService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IExtraHourCalculationService, ExtraHourCalculationService>();
