@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using ExtraHours.API.Model;
+using Microsoft.Extensions.Configuration;
 
 namespace ExtraHours.API.Utils
 {
@@ -12,9 +13,11 @@ namespace ExtraHours.API.Utils
         private const long ACCESS_TOKEN_EXPIRATION = 3600000; // 1 hora
         private const long REFRESH_TOKEN_EXPIRATION = 604800000; // 7 días
 
-        public JWTUtils()
+        public JWTUtils(IConfiguration configuration)
         {
-            var secretString = "843567893696976453275974432697R634976R738467TR678T34865R6834R8763T478378637664538745673865783678548735687R3";
+            var secretString = configuration["JwtSettings:SecretKey"];
+            if (string.IsNullOrEmpty(secretString))
+                throw new Exception("JWT SecretKey is not configured.");
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretString));
         }
 

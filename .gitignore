@@ -28,7 +28,6 @@ packages/
 *.log
 *.tmp
 
-
 ## Ignorar archivos de configuración local
 appsettings.Development.json
 appsettings.Local.json
@@ -45,11 +44,10 @@ coverage/
 .dotnet/
 .tools/
 
-## Ignorar archivos de Docker
-Dockerfile*
-.dockerignore
+## Ignorar solo archivos de Docker sensibles/locales
 docker-compose.override.yml
-docker-compose.yml
+docker-compose.local.yml
+.dockerignore.local
 
 ## Ignorar archivos de Node.js (si aplican)
 node_modules/
