@@ -79,7 +79,7 @@ cd GestorHorasExtraV1
 
 #### 2. Configura las variables de entorno
 
-# Crea y edita el archivo .env con tus valores específicos
+## Crea y edita el archivo .env con tus valores específicos
 
 **Variables que debes configurar en `.env`:**
 ```bash
