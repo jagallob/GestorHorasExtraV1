@@ -32,6 +32,9 @@ namespace ExtraHours.API.Tests
             };
         }
 
+        /// <summary>
+        /// Verifica el cálculo de horas extra diurnas en un día laboral.
+        /// </summary>
         [Fact]
         public async Task DetermineExtraHourTypeAsync_DiurnalHours_WorkingDay()
         {
@@ -54,6 +57,9 @@ namespace ExtraHours.API.Tests
             Assert.Equal(4.0, result.extraHours);
         }
 
+        /// <summary>
+        /// Verifica el cálculo de horas extra nocturnas en un día laboral, cruzando medianoche.
+        /// </summary>
         [Fact]
         public async Task DetermineExtraHourTypeAsync_NocturnalHours_WorkingDay()
         {
@@ -86,6 +92,9 @@ namespace ExtraHours.API.Tests
             Assert.Equal(3.0, extraHours, 1);
         }
 
+        /// <summary>
+        /// Verifica el cálculo de horas extra diurnas en un día festivo (domingo).
+        /// </summary>
         [Fact]
         public async Task DetermineExtraHourTypeAsync_DiurnalHours_Sunday()
         {
@@ -108,6 +117,9 @@ namespace ExtraHours.API.Tests
             Assert.Equal(4.0, result.extraHours);
         }
 
+        /// <summary>
+        /// Verifica el cálculo de horas extra nocturnas en un día festivo (domingo), cruzando medianoche.
+        /// </summary>
         [Fact]
         public async Task DetermineExtraHourTypeAsync_NocturnalHours_Sunday()
         {
@@ -140,6 +152,9 @@ namespace ExtraHours.API.Tests
             Assert.Equal(2.0, result2.extraHours, 1);
         }
 
+        /// <summary>
+        /// Verifica el cálculo de horas extra cuando el rango cruza de diurno a nocturno en un día laboral.
+        /// </summary>
         [Fact]
         public async Task DetermineExtraHourTypeAsync_MixedHours_DiurnalToNocturnal()
         {
@@ -172,6 +187,9 @@ namespace ExtraHours.API.Tests
             Assert.Equal(6.0, extraHours, 1);
         }
 
+        /// <summary>
+        /// Verifica el cálculo de horas extra cuando el rango cruza de nocturno a diurno en un día laboral.
+        /// </summary>
         [Fact]
         public async Task DetermineExtraHourTypeAsync_MixedHours_NocturnalToDiurnal()
         {
@@ -194,11 +212,14 @@ namespace ExtraHours.API.Tests
             Assert.Equal(4.0, result.extraHours);
         }
 
+        /// <summary>
+        /// Verifica que se lance excepción si la configuración es nula.
+        /// </summary>
         [Fact]
         public async Task DetermineExtraHourTypeAsync_ThrowsException_WhenConfigIsNull()
         {
             // Arrange
-            _configService.GetConfigAsync().Returns(Task.FromResult<ExtraHoursConfig>(null));
+            _configService.GetConfigAsync().Returns(Task.FromResult((ExtraHoursConfig)null!));
 
             var date = new DateTime(2025, 6, 13);
             var startTime = new TimeSpan(8, 0, 0);
@@ -212,6 +233,9 @@ namespace ExtraHours.API.Tests
             Assert.Equal("La configuración aún no está completamente cargada.", exception.Message);
         }
 
+        /// <summary>
+        /// Verifica que se lance excepción si la hora de fin es anterior a la de inicio.
+        /// </summary>
         [Fact]
         public async Task DetermineExtraHourTypeAsync_ThrowsException_WhenEndTimeBeforeStartTime()
         {
@@ -231,6 +255,9 @@ namespace ExtraHours.API.Tests
             Assert.Equal("La hora de fin debe ser posterior a la hora de inicio.", exception.Message);
         }
 
+        /// <summary>
+        /// Verifica que se propague la excepción lanzada por el servicio de configuración.
+        /// </summary>
         [Fact]
         public async Task DetermineExtraHourTypeAsync_ConfigServiceThrowsException()
         {
@@ -247,6 +274,9 @@ namespace ExtraHours.API.Tests
             );
         }
 
+        /// <summary>
+        /// Verifica el cálculo de horas extra en un festivo fijo colombiano (Año Nuevo).
+        /// </summary>
         [Fact]
         public async Task DetermineExtraHourTypeAsync_ColombianFixedHoliday_NewYear()
         {
@@ -269,6 +299,9 @@ namespace ExtraHours.API.Tests
             Assert.Equal(4.0, result.extraHours);
         }
 
+        /// <summary>
+        /// Verifica el cálculo de horas extra en un festivo fijo colombiano (Navidad), cruzando medianoche.
+        /// </summary>
         [Fact]
         public async Task DetermineExtraHourTypeAsync_ColombianFixedHoliday_Christmas()
         {
@@ -301,6 +334,9 @@ namespace ExtraHours.API.Tests
             Assert.Equal(2.0, result2.extraHours, 1);
         }
 
+        /// <summary>
+        /// Verifica el cálculo de horas extra con horas fraccionadas (minutos).
+        /// </summary>
         [Fact]
         public async Task DetermineExtraHourTypeAsync_FractionalHours()
         {
@@ -323,6 +359,9 @@ namespace ExtraHours.API.Tests
             Assert.Equal(2.75, result.extraHours);
         }
 
+        /// <summary>
+        /// Verifica el cálculo cuando el inicio es exactamente al final del periodo diurno.
+        /// </summary>
         [Fact]
         public async Task DetermineExtraHourTypeAsync_EdgeCase_StartAtDiurnalEnd()
         {
@@ -345,6 +384,9 @@ namespace ExtraHours.API.Tests
             Assert.Equal(1.0, result.extraHours);
         }
 
+        /// <summary>
+        /// Verifica el cálculo cuando el inicio es exactamente al inicio del periodo diurno.
+        /// </summary>
         [Fact]
         public async Task DetermineExtraHourTypeAsync_EdgeCase_StartAtDiurnalStart()
         {
