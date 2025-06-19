@@ -14,6 +14,9 @@ import { ConfigProvider } from "./utils/ConfigProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SettingsPage from "./pages/Settings/SettingsPage";
 import Layout from "./components/Layout/Layout";
+import SolicitudCompensacionPage from "./pages/SolicitudCompensacionPage";
+import IngresoAutorizacionPage from "./pages/IngresoAutorizacionPage";
+import GestionSolicitudesCompensacionPage from "./pages/GestionSolicitudesCompensacionPage";
 
 function App() {
   return (
@@ -95,6 +98,45 @@ function App() {
                 element={<UpdateDeletePersonal />}
               /> */}
             </Route>
+            <Route
+              path="/solicitud-compensacion"
+              element={
+                <ProtectedRoute
+                  allowedRoles={["empleado"]}
+                  element={
+                    <Layout>
+                      <SolicitudCompensacionPage />
+                    </Layout>
+                  }
+                />
+              }
+            />
+            <Route
+              path="/autorizacion-ingreso"
+              element={
+                <ProtectedRoute
+                  allowedRoles={["manager", "superusuario"]}
+                  element={
+                    <Layout>
+                      <IngresoAutorizacionPage />
+                    </Layout>
+                  }
+                />
+              }
+            />
+            <Route
+              path="/gestion-compensacion"
+              element={
+                <ProtectedRoute
+                  allowedRoles={["manager", "superusuario"]}
+                  element={
+                    <Layout>
+                      <GestionSolicitudesCompensacionPage />
+                    </Layout>
+                  }
+                />
+              }
+            />
           </Routes>
         </ConfigProvider>
       </AuthProvider>
