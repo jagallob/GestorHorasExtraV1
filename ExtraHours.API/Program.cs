@@ -15,8 +15,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 // Configurar DbContext
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
 
 
 // Registrar repositorios
@@ -38,6 +39,7 @@ builder.Services.AddSingleton<IJWTUtils, JWTUtils>(provider =>
 builder.Services.AddScoped<IExtraHoursConfigService, ExtraHoursConfigService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IExtraHourCalculationService, ExtraHourCalculationService>();
+builder.Services.AddScoped<ICompensationRequestService, CompensationRequestService>();
 
 // Agregar controladores
 builder.Services.AddControllers()
