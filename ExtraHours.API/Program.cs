@@ -212,15 +212,6 @@ try
     app.MapGet("/", () => "ExtraHours API is running!");
     app.MapGet("/health", () => "OK");
 
-    // Endpoint temporal para verificar JWT_SECRET en Render
-    app.MapGet("/debug-jwt-secret", (IConfiguration config) =>
-    {
-        var secret = config["JWT_SECRET"];
-        if (string.IsNullOrEmpty(secret))
-            return Results.Problem("JWT_SECRET no está configurada o está vacía");
-        return Results.Ok($"JWT_SECRET configurada. Longitud: {secret.Length}");
-    });
-
     // Aplicar migraciones automáticamente
     using (var scope = app.Services.CreateScope())
     {
