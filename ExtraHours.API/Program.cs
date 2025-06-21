@@ -110,7 +110,7 @@ try
         options.AddPolicy("SuperusuarioOnly", policy => policy.RequireRole("superusuario"));
     });
 
-    // Configurar CORS - más permisivo para deployment
+    // Configurar CORS 
     var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
     builder.Services.AddCors(options =>
     {
@@ -132,7 +132,8 @@ try
                 // En producción, más permisivo
                 policy.WithOrigins("https://gestor-horas-extra.vercel.app")
                       .AllowAnyHeader()
-                      .AllowAnyMethod();
+                      .AllowAnyMethod()
+                      .AllowCredentials(); // ← ESTA LÍNEA ES CRUCIAL
             }
         });
     });
