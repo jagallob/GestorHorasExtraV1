@@ -133,7 +133,7 @@ try
                 policy.WithOrigins("https://gestor-horas-extra.vercel.app")
                       .AllowAnyHeader()
                       .AllowAnyMethod()
-                      .AllowCredentials(); // ← ESTA LÍNEA ES CRUCIAL
+                      .AllowCredentials();
             }
         });
     });
