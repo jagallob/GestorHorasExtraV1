@@ -130,7 +130,7 @@ try
             else
             {
                 // En producción, más permisivo
-                policy.AllowAnyOrigin()
+                policy.WithOrigins("https://gestor-horas.vercel.app")
                       .AllowAnyHeader()
                       .AllowAnyMethod();
             }
