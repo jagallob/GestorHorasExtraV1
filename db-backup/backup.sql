@@ -31,7 +31,7 @@ CREATE TABLE public."ArticlePoints" (
 );
 
 
-ALTER TABLE public."ArticlePoints" OWNER TO postgres;
+ALTER TABLE public."ArticlePoints" OWNER TO gestor_horas_db_user;
 
 --
 -- Name: __EFMigrationsHistory; Type: TABLE; Schema: public; Owner: postgres
@@ -43,7 +43,7 @@ CREATE TABLE public."__EFMigrationsHistory" (
 );
 
 
-ALTER TABLE public."__EFMigrationsHistory" OWNER TO postgres;
+ALTER TABLE public."__EFMigrationsHistory" OWNER TO gestor_horas_db_user;
 
 --
 -- Name: articles; Type: TABLE; Schema: public; Owner: postgres
@@ -55,7 +55,7 @@ CREATE TABLE public.articles (
 );
 
 
-ALTER TABLE public.articles OWNER TO postgres;
+ALTER TABLE public.articles OWNER TO gestor_horas_db_user;
 
 --
 -- Name: employees; Type: TABLE; Schema: public; Owner: postgres
@@ -70,7 +70,7 @@ CREATE TABLE public.employees (
 );
 
 
-ALTER TABLE public.employees OWNER TO postgres;
+ALTER TABLE public.employees OWNER TO gestor_horas_db_user;
 
 --
 -- Name: extra_hours; Type: TABLE; Schema: public; Owner: postgres
@@ -93,7 +93,7 @@ CREATE TABLE public.extra_hours (
 );
 
 
-ALTER TABLE public.extra_hours OWNER TO postgres;
+ALTER TABLE public.extra_hours OWNER TO gestor_horas_db_user;
 
 --
 -- Name: extra_hours_config; Type: TABLE; Schema: public; Owner: postgres
@@ -111,7 +111,7 @@ CREATE TABLE public.extra_hours_config (
 );
 
 
-ALTER TABLE public.extra_hours_config OWNER TO postgres;
+ALTER TABLE public.extra_hours_config OWNER TO gestor_horas_db_user;
 
 --
 -- Name: extra_hours_config_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -151,7 +151,7 @@ CREATE TABLE public.managers (
 );
 
 
-ALTER TABLE public.managers OWNER TO postgres;
+ALTER TABLE public.managers OWNER TO gestor_horas_db_user;
 
 --
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
@@ -167,7 +167,7 @@ CREATE TABLE public.users (
 );
 
 
-ALTER TABLE public.users OWNER TO postgres;
+ALTER TABLE public.users OWNER TO gestor_horas_db_user;
 
 --
 -- Data for Name: ArticlePoints; Type: TABLE DATA; Schema: public; Owner: postgres
