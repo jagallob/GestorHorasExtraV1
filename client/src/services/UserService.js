@@ -3,6 +3,12 @@ import { API_CONFIG } from "../environments/api.config";
 export const UserService = {
   login: async (email, password) => {
     try {
+      // === DEBUGGING ===
+      console.log("=== LOGIN DEBUG ===");
+      console.log("Current origin:", window.location.origin);
+      console.log("API URL:", API_CONFIG.BASE_URL);
+      console.log("Full login URL:", `${API_CONFIG.BASE_URL}/auth/login`);
+      console.log("Request payload:", { email, password: "***" });
       const response = await fetch(`${API_CONFIG.BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
@@ -10,6 +16,10 @@ export const UserService = {
         },
         body: JSON.stringify({ email, password }),
       });
+      // Más debugging
+      console.log("Response status:", response.status);
+      console.log("Response ok:", response.ok);
+      console.log("Response headers:", [...response.headers.entries()]);
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`);
       }
@@ -23,6 +33,8 @@ export const UserService = {
       return data;
     } catch (error) {
       console.error("Login error:", error);
+      console.error("Error type:", error.constructor.name);
+      console.error("Error message:", error.message);
       throw error;
     }
   },
