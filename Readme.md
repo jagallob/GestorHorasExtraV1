@@ -127,7 +127,7 @@ docker-compose up --build
 Una vez que todos los contenedores estén ejecutándose:
 
 - **Frontend:** http://localhost:5173
-- **Backend API:** http://localhost:7086
+- **Backend API:** https://extrahours-api.onrender.com
 - **Base de datos PostgreSQL:** localhost:5432
 
 ### Comandos útiles
