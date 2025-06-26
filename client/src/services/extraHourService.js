@@ -255,11 +255,8 @@ export const findManagerEmployeesExtraHours = async (
 
     const data = await response.json();
 
-    return data.map((item) => ({
-      ...(item.extraHour || {}),
-      ...(item.employee || {}),
-      id: item.extraHour?.id || item.id,
-    }));
+    // Solución: retornar los datos tal cual los envía el backend
+    return data;
   } catch (error) {
     console.error(
       "[ExtraHourService] Error en findManagerEmployeesExtraHours:",
