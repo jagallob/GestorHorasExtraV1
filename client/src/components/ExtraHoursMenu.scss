@@ -320,7 +320,7 @@ body {
 }
 
 .menu-title {
-  color: #fff;
+  color: #1A237E; // Azul fuerte
   font-weight: 700;
   font-size: 2rem;
   margin-bottom: 4px;
@@ -329,10 +329,9 @@ body {
 }
 
 .menu-title-card {
-  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); // Verde dollar degradado
+  background: #fff; // Fondo blanco
   border-radius: $border-radius;
-  box-shadow: 0 6px 24px rgba(30, 64, 175, 0.18),
-    0 1.5px 6px rgba(0, 0, 0, 0.13);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Sombra ligera
   padding: 24px 32px;
   margin: 0 auto;
   display: flex;
@@ -341,6 +340,7 @@ body {
   width: fit-content;
   min-width: 320px;
   max-width: 480px;
+  border-bottom: 2px solid #e5e7eb; // Borde inferior sutil
 }
 
 // Responsive design mejorado
