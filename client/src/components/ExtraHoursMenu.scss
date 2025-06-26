@@ -320,7 +320,7 @@ body {
 }
 
 .menu-title {
-  color: #22c55e; // Verde dollar
+  color: #fff;
   font-weight: 700;
   font-size: 2rem;
   margin-bottom: 4px;
@@ -329,11 +329,7 @@ body {
 }
 
 .menu-title-card {
-  background: linear-gradient(
-    135deg,
-    #fbbf24 0%,
-    #fde68a 100%
-  ); // Cambiado a un gradiente amarillo para diferenciar
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); // Verde dollar degradado
   border-radius: $border-radius;
   box-shadow: 0 6px 24px rgba(30, 64, 175, 0.18),
     0 1.5px 6px rgba(0, 0, 0, 0.13);
