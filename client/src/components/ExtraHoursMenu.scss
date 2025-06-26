@@ -235,6 +235,15 @@ body {
   }
 }
 
+// Eliminar hover de .menu-icon en todas las variantes
+.menu-card.blue:hover .menu-icon,
+.menu-card.slate:hover .menu-icon,
+.menu-card.indigo:hover .menu-icon,
+.menu-card.gray:hover .menu-icon,
+.icon-container:hover .menu-icon {
+  color: unset;
+}
+
 // Contenido de la card
 .card-content {
   display: flex;
@@ -320,7 +329,11 @@ body {
 }
 
 .menu-title-card {
-  background: linear-gradient(135deg, #379ef3 0%, #8cb7f0 100%);
+  background: linear-gradient(
+    135deg,
+    #fbbf24 0%,
+    #fde68a 100%
+  ); // Cambiado a un gradiente amarillo para diferenciar
   border-radius: $border-radius;
   box-shadow: 0 6px 24px rgba(30, 64, 175, 0.18),
     0 1.5px 6px rgba(0, 0, 0, 0.13);
