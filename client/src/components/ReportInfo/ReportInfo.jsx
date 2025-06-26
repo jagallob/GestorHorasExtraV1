@@ -340,8 +340,6 @@ export const ReportInfo = () => {
           key="1"
         >
           {filteredData.length > 0 && (
-            // Log para depuración de datos en la consola del navegador
-            console.log("filteredData", filteredData),
             <div className="extra-hours-info">
               <Title level={3}>
                 Registros de Horas Extras
