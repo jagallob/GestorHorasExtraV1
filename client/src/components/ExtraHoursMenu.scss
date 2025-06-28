@@ -320,7 +320,11 @@ body {
 }
 
 .menu-title {
-  background: linear-gradient(90deg, #1a237e 0%, #1976d2 100%); // Gradiente azul al texto
+  background: linear-gradient(
+    90deg,
+    #1a237e 0%,
+    #1976d2 100%
+  ); // Gradiente azul al texto
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -333,9 +337,13 @@ body {
 }
 
 .menu-title-card {
-  background: linear-gradient(135deg, #e3f0ff 0%, #ffffff 100%); // Gradiente azul sutil
+  background: linear-gradient(
+    135deg,
+    #e3f0ff 0%,
+    #ffffff 100%
+  ); // Gradiente azul sutil
   border-radius: $border-radius;
-  box-shadow: 0 8px 32px rgba(30, 64, 175, 0.18), 0 2px 8px rgba(0,0,0,0.18); // Sombra más notable
+  box-shadow: 0 8px 32px rgba(30, 64, 175, 0.18), 0 2px 8px rgba(0, 0, 0, 0.18); // Sombra más notable
   padding: 24px 32px;
   margin: 0 auto;
   display: flex;
