@@ -14,7 +14,7 @@ namespace ExtraHours.API.Controller
         private readonly IEmployeeService _employeeService;
         private readonly IExtraHourCalculationService _calculationService;
 
-        public ExtraHourController(IExtraHourService extraHourService, IEmployeeService employeeService, IExtraHourCalculationService calculationService) 
+        public ExtraHourController(IExtraHourService extraHourService, IEmployeeService employeeService, IExtraHourCalculationService calculationService)
         {
             _extraHourService = extraHourService;
             _employeeService = employeeService;
@@ -458,7 +458,7 @@ namespace ExtraHours.API.Controller
 
         }
 
-      
+
     }
 
     public class ExtraHourCalculationRequest
