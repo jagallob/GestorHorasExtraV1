@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "./IngresoAutorizacionForm.scss";
 
 const initialState = {
   employeeName: "",
