@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useAuth } from "../utils/useAuth";
+import { useAuth } from "../../utils/useAuth";
 import dayjs from "dayjs";
-import "../GestionSolicitudesCompensacion/GestionSolicitudesCompensacion.css";
+import "./GestionSolicitudesCompensacion.scss";
 
 export default function GestionSolicitudesCompensacion() {
   const { userRole } = useAuth();
