@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../utils/useAuth";
 import dayjs from "dayjs";
+import "./GestionSolicitudesCompensacion.scss"; // Importar los estilos
 
 export default function GestionSolicitudesCompensacion() {
   const { userRole } = useAuth();
@@ -31,35 +32,66 @@ export default function GestionSolicitudesCompensacion() {
     setError("");
     setSuccess("");
     try {
+      const justification =
+        status === "Rejected" ? prompt("Motivo de rechazo:") : "";
+
+      // Si el usuario cancela el prompt para rechazo, no continuar
+      if (status === "Rejected" && justification === null) {
+        return;
+      }
+
       await axios.put(`/api/CompensationRequest/${id}/status`, {
         status,
-        justification:
-          status === "Rejected" ? prompt("Motivo de rechazo:") : "",
+        justification,
         approvedById: null, // El backend lo puede obtener del token si es necesario
       });
-      setSuccess("Solicitud actualizada correctamente.");
+
+      setSuccess(
+        `Solicitud ${
+          status === "Approved" ? "aprobada" : "rechazada"
+        } correctamente.`
+      );
       fetchSolicitudes();
     } catch (err) {
       setError("Error al actualizar la solicitud.");
     }
   };
 
+  // Función para obtener el indicador de estado
+  const getStatusIndicator = (status) => {
+    const statusClass = status.toLowerCase();
+    const statusText = {
+      pending: "Pendiente",
+      approved: "Aprobada",
+      rejected: "Rechazada",
+    };
+
+    return (
+      <span className={`status-indicator ${statusClass}`}>
+        {statusText[statusClass] || status}
+      </span>
+    );
+  };
+
   return (
-    <div className="autorizacion-form">
+    <div className="autorizacion-form gestion-solicitudes-component">
       <h2>Gestión de Solicitudes de Compensación</h2>
-      {loading && <p>Cargando...</p>}
+
+      {loading && <p>Cargando solicitudes...</p>}
       {error && <div className="error-msg">{error}</div>}
       {success && <div className="success-msg">{success}</div>}
+
       {!loading && solicitudes.length === 0 && (
         <p>No hay solicitudes pendientes.</p>
       )}
+
       {!loading && solicitudes.length > 0 && (
         <table className="solicitudes-table">
           <thead>
             <tr>
               <th>Empleado</th>
-              <th>Fecha trabajada</th>
-              <th>Día solicitado</th>
+              <th>Fecha Trabajada</th>
+              <th>Día Solicitado</th>
               <th>Estado</th>
               <th>Justificación</th>
               <th>Acciones</th>
@@ -67,30 +99,41 @@ export default function GestionSolicitudesCompensacion() {
           </thead>
           <tbody>
             {solicitudes.map((s) => (
-              <tr key={s.id}>
-                <td>{s.employee?.name || s.employeeId}</td>
-                <td>{dayjs(s.workDate).format("YYYY-MM-DD")}</td>
-                <td>
-                  {dayjs(s.requestedCompensationDate).format("YYYY-MM-DD")}
+              <tr key={s.id} data-status={s.status}>
+                <td data-label="Empleado">
+                  {s.employee?.name || s.employeeId}
                 </td>
-                <td>{s.status}</td>
-                <td>{s.justification || "-"}</td>
-                <td>
+                <td data-label="Fecha Trabajada">
+                  {dayjs(s.workDate).format("DD/MM/YYYY")}
+                </td>
+                <td data-label="Día Solicitado">
+                  {dayjs(s.requestedCompensationDate).format("DD/MM/YYYY")}
+                </td>
+                <td data-label="Estado">{getStatusIndicator(s.status)}</td>
+                <td data-label="Justificación">{s.justification || "-"}</td>
+                <td data-label="Acciones">
                   {s.status === "Pending" &&
                     (userRole === "manager" || userRole === "superusuario") && (
                       <>
                         <button
                           onClick={() => handleDecision(s.id, "Approved")}
+                          title="Aprobar solicitud"
                         >
                           Aprobar
                         </button>
                         <button
                           onClick={() => handleDecision(s.id, "Rejected")}
+                          title="Rechazar solicitud"
                         >
                           Rechazar
                         </button>
                       </>
                     )}
+                  {s.status !== "Pending" && (
+                    <span style={{ color: "#6b7280", fontStyle: "italic" }}>
+                      Procesada
+                    </span>
+                  )}
                 </td>
               </tr>
             ))}
