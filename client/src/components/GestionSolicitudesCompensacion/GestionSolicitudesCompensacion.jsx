@@ -16,9 +16,29 @@ export default function GestionSolicitudesCompensacion() {
     setError("");
     try {
       const res = await axios.get("/api/CompensationRequest");
-      setSolicitudes(res.data);
+
+      // Verificar la estructura de la respuesta y manejar diferentes formatos
+      let data = res.data;
+
+      // Si la respuesta es un objeto con una propiedad que contiene el array
+      if (data && typeof data === "object" && !Array.isArray(data)) {
+        // Casos comunes: { data: [...] }, { items: [...] }, { solicitudes: [...] }
+        data =
+          data.data || data.items || data.solicitudes || data.results || [];
+      }
+
+      // Asegurar que siempre sea un array
+      const solicitudesArray = Array.isArray(data) ? data : [];
+
+      setSolicitudes(solicitudesArray);
+
+      // Debug: Mostrar en consola la estructura de la respuesta
+      console.log("Respuesta de la API:", res.data);
+      console.log("Array procesado:", solicitudesArray);
     } catch (err) {
+      console.error("Error al cargar solicitudes:", err);
       setError("Error al cargar las solicitudes.");
+      setSolicitudes([]); // Asegurar que siempre sea un array
     } finally {
       setLoading(false);
     }
@@ -53,6 +73,7 @@ export default function GestionSolicitudesCompensacion() {
       );
       fetchSolicitudes();
     } catch (err) {
+      console.error("Error al actualizar solicitud:", err);
       setError("Error al actualizar la solicitud.");
     }
   };
