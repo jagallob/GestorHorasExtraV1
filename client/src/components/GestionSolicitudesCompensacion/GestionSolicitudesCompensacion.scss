@@ -8,15 +8,27 @@
     margin: 24px 0;
     color: #fff;
 
+    min-height: 280px;
+    width: 100%;
+    max-width: 1200px;
+
+    overflow-x: auto;
+
     h2 {
       color: #fff;
       font-family: "Inter", Arial, Helvetica, sans-serif;
-      margin-bottom: 24px;
+      margin-bottom: 6px;
       padding-bottom: 12px;
       border-bottom: 1px solid #b6d6f7;
       font-weight: 700;
       letter-spacing: -0.01em;
       font-size: 28px;
+    }
+
+    .component-header {
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #b6d6f7;
     }
 
     // Estados de carga y mensajes
@@ -29,6 +41,10 @@
       background: rgba(255, 255, 255, 0.1);
       border-radius: 8px;
       border: 1px solid #b6d6f7;
+      min-height: 50px; // Altura mínima para los mensajes
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .error-msg {
@@ -41,6 +57,10 @@
       font-weight: 500;
       text-align: center;
       animation: fadeIn 0.3s ease-in;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .success-msg {
@@ -53,6 +73,10 @@
       font-weight: 500;
       text-align: center;
       animation: fadeIn 0.3s ease-in;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     // Tabla de solicitudes
@@ -209,6 +233,9 @@
 
     // Responsive design
     @media (max-width: 1200px) {
+      max-width: 100%;
+      padding: 28px 20px;
+
       .solicitudes-table {
         font-size: 13px;
 
@@ -227,6 +254,7 @@
 
     @media (max-width: 768px) {
       padding: 24px 16px;
+      min-height: 240px;
 
       h2 {
         font-size: 24px;
@@ -257,6 +285,8 @@
     }
 
     @media (max-width: 480px) {
+      min-height: 200px;
+
       .solicitudes-table {
         // En móviles muy pequeños, hacer la tabla scrolleable horizontalmente
         display: block;

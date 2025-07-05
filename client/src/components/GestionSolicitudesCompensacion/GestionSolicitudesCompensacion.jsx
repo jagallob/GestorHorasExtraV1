@@ -96,7 +96,9 @@ export default function GestionSolicitudesCompensacion() {
 
   return (
     <div className="autorizacion-form gestion-solicitudes-component">
-      <h2>Gestión de Solicitudes de Compensación</h2>
+      <div className="component-header">
+        <h2>Gestión de Solicitudes de Compensación</h2>
+      </div>
 
       {loading && <p>Cargando solicitudes...</p>}
       {error && <div className="error-msg">{error}</div>}
