@@ -50,8 +50,6 @@ const ExtraHoursSettings = () => {
         return;
       }
 
-      console.log("Token enviado:", auth.token);
-
       const updatedConfig = await updateConfig(updatedValues, auth.token);
       setConfig(updatedConfig);
       message.success("Configuración actualizada correctamente");

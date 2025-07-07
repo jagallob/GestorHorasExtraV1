@@ -1,6 +1,14 @@
 export const API_CONFIG = {
-  BASE_URL:
-    (import.meta.env.VITE_API_USE_LOCAL === "true"
-      ? import.meta.env.VITE_API_BASE_URL_LOCAL
-      : import.meta.env.VITE_API_BASE_URL) || "http://localhost:7086",
+  BASE_URL: (() => {
+    // En producción (Vercel)
+    if (import.meta.env.PROD) {
+      return (
+        import.meta.env.VITE_API_BASE_URL ||
+        "https://extrahours-api.onrender.com"
+      );
+    }
+
+    // En desarrollo (Docker local o npm run dev)
+    return import.meta.env.VITE_API_BASE_URL_LOCAL || "http://localhost:7086";
+  })(),
 };
