@@ -44,6 +44,11 @@ const ExtraHoursSettings = () => {
         diurnalEnd: values.diurnalEnd.format("HH:mm"),
       };
 
+      console.log("=== DEBUGGING CONFIG UPDATE ===");
+      console.log("Form values:", values);
+      console.log("Processed values:", updatedValues);
+      console.log("Auth token exists:", !!auth?.token);
+
       if (!auth?.token) {
         message.error("No tienes autorización para realizar esta acción.");
         setLoading(false);
@@ -54,6 +59,11 @@ const ExtraHoursSettings = () => {
       setConfig(updatedConfig);
       message.success("Configuración actualizada correctamente");
     } catch (error) {
+      console.error("=== ERROR DETAILS ===");
+      console.error("Full error:", error);
+      console.error("Response:", error.response);
+      console.error("Response data:", error.response?.data);
+      console.error("Response status:", error.response?.status);
       if (error.response && error.response.status === 400) {
         message.error(error.response.data); // Mostrar mensaje del backend si excede el límite
       } else {
