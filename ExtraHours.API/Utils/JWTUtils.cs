@@ -15,7 +15,7 @@ namespace ExtraHours.API.Utils
 
         public JWTUtils(IConfiguration configuration)
         {
-            var secretString = configuration["JwtSettings:SecretKey"];
+            var secretString = configuration["JwtSettings:SecretKey"] ?? configuration["JWT_SECRET"];
             if (string.IsNullOrEmpty(secretString))
                 throw new Exception("JWT SecretKey is not configured.");
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretString));

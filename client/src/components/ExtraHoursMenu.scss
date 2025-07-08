@@ -235,6 +235,15 @@ body {
   }
 }
 
+// Eliminar hover de .menu-icon en todas las variantes
+.menu-card.blue:hover .menu-icon,
+.menu-card.slate:hover .menu-icon,
+.menu-card.indigo:hover .menu-icon,
+.menu-card.gray:hover .menu-icon,
+.icon-container:hover .menu-icon {
+  color: unset;
+}
+
 // Contenido de la card
 .card-content {
   display: flex;
@@ -311,7 +320,11 @@ body {
 }
 
 .menu-title {
-  color: #ffffff;
+  background: linear-gradient(90deg, #1a237e 0%, #1976d2 100%); // Gradiente azul al texto
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
   font-weight: 700;
   font-size: 2rem;
   margin-bottom: 4px;
@@ -320,10 +333,9 @@ body {
 }
 
 .menu-title-card {
-  background: linear-gradient(135deg, #379ef3 0%, #8cb7f0 100%);
+  background: linear-gradient(135deg, #e3f0ff 0%, #ffffff 100%); // Gradiente azul sutil
   border-radius: $border-radius;
-  box-shadow: 0 6px 24px rgba(30, 64, 175, 0.18),
-    0 1.5px 6px rgba(0, 0, 0, 0.13);
+  box-shadow: 0 8px 32px rgba(30, 64, 175, 0.18), 0 2px 8px rgba(0,0,0,0.18); // Sombra más notable
   padding: 24px 32px;
   margin: 0 auto;
   display: flex;
@@ -332,6 +344,7 @@ body {
   width: fit-content;
   min-width: 320px;
   max-width: 480px;
+  border-bottom: 2px solid #e5e7eb; // Borde inferior sutil
 }
 
 // Responsive design mejorado

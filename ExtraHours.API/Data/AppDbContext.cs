@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ExtraHours.API.Model;    
+using ExtraHours.API.Model;
 
 namespace ExtraHours.API.Data
 {
@@ -14,6 +14,7 @@ namespace ExtraHours.API.Data
         public DbSet<ExtraHoursConfig> extraHoursConfigs { get; set; }
         public DbSet<Manager> managers { get; set; }
         public DbSet<User> users { get; set; }
+        public DbSet<CompensationRequest> compensationRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,6 +45,20 @@ namespace ExtraHours.API.Data
                 .WithMany()
                 .HasForeignKey(eh => eh.id)
                 .OnDelete(DeleteBehavior.Cascade); // Eliminar las horas extras si se elimina el empleado
+
+            // Relación entre CompensationRequest y Employee
+            modelBuilder.Entity<CompensationRequest>()
+                .HasOne(cr => cr.Employee)
+                .WithMany()
+                .HasForeignKey(cr => cr.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Relación entre CompensationRequest y User (ApprovedBy)
+            modelBuilder.Entity<CompensationRequest>()
+                .HasOne(cr => cr.ApprovedBy)
+                .WithMany()
+                .HasForeignKey(cr => cr.ApprovedById)
+                .OnDelete(DeleteBehavior.SetNull);
 
             // Datos iniciales para ExtraHoursConfig
             modelBuilder.Entity<ExtraHoursConfig>().HasData(new ExtraHoursConfig { id = 1 });

@@ -101,7 +101,7 @@ namespace ExtraHours.API.Controller
                             nocturnal = extraHour.nocturnal,
                             diurnalHoliday = extraHour.diurnalHoliday,
                             nocturnalHoliday = extraHour.nocturnalHoliday,
-                            extrasHours = extraHour.extraHours,
+                            extrasHours = extraHour.extraHours, // mantener el nombre esperado por el frontend
                             date = extraHour.date.ToString("yyyy-MM-dd"),
                             startTime = extraHour.startTime,
                             endTime = extraHour.endTime,
