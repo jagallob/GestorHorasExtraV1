@@ -20,10 +20,10 @@ const ExtraHoursSettings = () => {
     if (config) {
       form.setFieldsValue({
         weeklyExtraHoursLimit: config.weeklyExtraHoursLimit,
-        diurnalMultiplier: config.diurnalMultiplier,
-        nocturnalMultiplier: config.nocturnalMultiplier,
-        diurnalHolidayMultiplier: config.diurnalHolidayMultiplier,
-        nocturnalHolidayMultiplier: config.nocturnalHolidayMultiplier,
+        // diurnalMultiplier: config.diurnalMultiplier,
+        // nocturnalMultiplier: config.nocturnalMultiplier,
+        // diurnalHolidayMultiplier: config.diurnalHolidayMultiplier,
+        // nocturnalHolidayMultiplier: config.nocturnalHolidayMultiplier,
         diurnalStart: dayjs(config.diurnalStart, "HH:mm"),
         diurnalEnd: dayjs(config.diurnalEnd, "HH:mm"),
       });
