@@ -35,6 +35,7 @@ const ExtraHoursSettings = () => {
 
     try {
       const updatedValues = {
+        id: config.id,
         weeklyExtraHoursLimit: values.weeklyExtraHoursLimit,
         diurnalMultiplier: values.diurnalMultiplier,
         nocturnalMultiplier: values.nocturnalMultiplier,
