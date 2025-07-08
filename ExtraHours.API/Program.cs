@@ -48,6 +48,7 @@ try
     builder.Services.AddScoped<IExtraHourRepository, ExtraHourRepository>();
     builder.Services.AddScoped<IManagerRepository, ManagerRepository>();
     builder.Services.AddScoped<IExtraHoursConfigRepository, ExtraHoursConfigRepository>();
+    builder.Services.AddScoped<ColombianHolidayService>();
 
     // Registrar servicios
     builder.Services.AddScoped<IAuthService, AuthService>();
