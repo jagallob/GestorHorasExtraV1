@@ -37,10 +37,10 @@ const ExtraHoursSettings = () => {
       const updatedValues = {
         id: config.id,
         weeklyExtraHoursLimit: values.weeklyExtraHoursLimit,
-        diurnalMultiplier: values.diurnalMultiplier,
-        nocturnalMultiplier: values.nocturnalMultiplier,
-        diurnalHolidayMultiplier: values.diurnalHolidayMultiplier,
-        nocturnalHolidayMultiplier: values.nocturnalHolidayMultiplier,
+        // diurnalMultiplier: values.diurnalMultiplier,
+        // nocturnalMultiplier: values.nocturnalMultiplier,
+        // diurnalHolidayMultiplier: values.diurnalHolidayMultiplier,
+        // nocturnalHolidayMultiplier: values.nocturnalHolidayMultiplier,
         diurnalStart: values.diurnalStart.format("HH:mm"),
         diurnalEnd: values.diurnalEnd.format("HH:mm"),
       };
