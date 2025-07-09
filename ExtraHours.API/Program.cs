@@ -48,6 +48,7 @@ try
     builder.Services.AddScoped<IExtraHourRepository, ExtraHourRepository>();
     builder.Services.AddScoped<IManagerRepository, ManagerRepository>();
     builder.Services.AddScoped<IExtraHoursConfigRepository, ExtraHoursConfigRepository>();
+    builder.Services.AddScoped<ColombianHolidayService>();
 
     // Registrar servicios
     builder.Services.AddScoped<IAuthService, AuthService>();
@@ -130,7 +131,7 @@ try
             else
             {
                 // En producción, más permisivo
-                policy.WithOrigins("https://gestor-horas-extra.vercel.app")
+                policy.WithOrigins("https://gestor-horas-extra.vercel.app", "http://localhost:5173")
                       .AllowAnyHeader()
                       .AllowAnyMethod()
                       .AllowCredentials();

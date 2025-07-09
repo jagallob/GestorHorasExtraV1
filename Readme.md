@@ -127,8 +127,12 @@ docker-compose up --build
 Una vez que todos los contenedores estén ejecutándose:
 
 - **Frontend:** http://localhost:5173
-- **Backend API:** https://extrahours-api.onrender.com
+- **Backend API:** http://localhost:7086
 - **Base de datos PostgreSQL:** localhost:5432
+
+> **Nota:**
+> - Si usas Docker Compose, tanto el frontend como el backend estarán disponibles en tu máquina local en los puertos indicados.
+> - Si despliegas el backend en la nube (por ejemplo, en Render), la URL será la pública de Render (https://extrahours-api.onrender.com), pero para desarrollo local con Docker, usa la URL local.
 
 ### Comandos útiles
 
@@ -528,24 +532,104 @@ dotnet ef database update
 ```
 
 ## Despliegue
+El proyecto puede desplegarse completamente en la nube usando:
 
-### Frontend
+🔹 Frontend en Vercel
 
-Para compilar el frontend para producción:
+🔹 Backend y Base de Datos en Render
+
+🔷 **Despliegue del Frontend en Vercel**
+1. **Requisitos**
+   - Tener una cuenta en Vercel
+   - Repositorio conectado con GitHub
+   - Frontend ubicado en la carpeta `client/` o similar
+
+2. **Pasos**
+   - Ve a Vercel, crea un nuevo proyecto desde GitHub.
+   - Selecciona el repositorio del proyecto.
+   - En Root Directory, elige `client` (si el frontend está en `/client`).
+   - Configura las siguientes variables de entorno:
+
+     | Clave                    | Valor                                             |
+     |--------------------------|---------------------------------------------------|
+     | VITE_API_USE_LOCAL       | false                                             |
+     | VITE_API_BASE_URL        | https://<TU-BACKEND>.onrender.com (tu URL Render) |
+     | VITE_API_BASE_URL_LOCAL  | http://localhost:7086                             |
+
+   - Haz clic en Deploy.
+
+3. **Resultado**
+   - Vercel generará una URL como `https://gestor-horas-frontend.vercel.app`
+   - Esta URL debe ser configurada como origen CORS en el backend.
+
+🔷 **Despliegue del Backend en Render**
+1. **Requisitos**
+   - Cuenta en Render
+   - Dockerfile en el backend
+   - Proyecto con .NET y PostgreSQL configurado
+
+2. **Pasos**
+   - En Render, selecciona "New Web Service".
+   - Conecta tu cuenta de GitHub y elige el repo.
+   - Define los siguientes parámetros:
+     - Environment: Docker
+     - Start Command: Render detecta automáticamente el CMD del Dockerfile.
+   - Configura las variables de entorno en Render:
+
+     | Clave           | Valor                                 |
+     |-----------------|---------------------------------------|
+     | DB_HOST         | dpg-xxxxxx.oregon-postgres.render.com |
+     | DB_NAME         | Nombre de la base de datos en Render  |
+     | DB_USER         | Usuario de Render                     |
+     | DB_PASSWORD     | Contraseña de Render                   |
+     | JWT_SECRET      | Clave secreta segura (mínimo 32 chars)|
+     | JWT_ISSUER      | ExtraHours.API                        |
+     | JWT_AUDIENCE    | ExtraHours.Client                     |
+     | ASPNETCORE_ENVIRONMENT | Production                      |
+
+   - Render generará una URL como: `https://gestor-horas-api.onrender.com`
+
+🔷 **Despliegue de Base de Datos en Render**
+- En Render, crea un nuevo recurso de tipo PostgreSQL.
+- Copia el Database URL y configura las variables DB_HOST, DB_NAME, etc. en tu backend.
+- Restaura el backup SQL desde tu equipo local con el comando:
 
 ```bash
-npm run build
+PGPASSWORD=tu_password psql -h tu_host -U tu_usuario -d tu_base -p 5432 -f backup.sql
 ```
 
-Los archivos compilados se encontrarán en el directorio `dist`.
+🔁 **Conexión Frontend ↔ Backend**
+En tu `api.config.js` del frontend:
 
-### Backend
-
-Para publicar el backend:
-
-```bash
-dotnet publish -c Release
+```js
+export const API_CONFIG = {
+  BASE_URL:
+    (import.meta.env.VITE_API_USE_LOCAL === "true"
+      ? import.meta.env.VITE_API_BASE_URL_LOCAL
+      : import.meta.env.VITE_API_BASE_URL) || "http://localhost:7086",
+};
 ```
+Asegúrate de que las variables estén correctamente definidas en Vercel.
+
+✅ **Recomendaciones finales**
+- Verifica que en `Program.cs` del backend estés usando CORS correctamente:
+
+```csharp
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.WithOrigins("https://gestor-horas-frontend.vercel.app")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+app.UseCors("CorsPolicy");
+```
+- Usa https siempre en producción.
+- Protege tus variables sensibles: nunca subas `.env` al repo.
+
 
 ## Estructura de Directorios Recomendada
 
