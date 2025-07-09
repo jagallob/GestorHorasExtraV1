@@ -26,10 +26,10 @@ export const ConfigProvider = ({ children }) => {
         const data = response.data;
         const transformedData = {
           weeklyExtraHoursLimit: data.weeklyExtraHoursLimit,
-          diurnalMultiplier: data.diurnalMultiplier,
-          nocturnalMultiplier: data.nocturnalMultiplier,
-          diurnalHolidayMultiplier: data.diurnalHolidayMultiplier,
-          nocturnalHolidayMultiplier: data.nocturnalHolidayMultiplier,
+          // diurnalMultiplier: data.diurnalMultiplier,
+          // nocturnalMultiplier: data.nocturnalMultiplier,
+          // diurnalHolidayMultiplier: data.diurnalHolidayMultiplier,
+          // nocturnalHolidayMultiplier: data.nocturnalHolidayMultiplier,
           diurnalStart: data.diurnalStart,
           diurnalEnd: data.diurnalEnd,
         };
