@@ -32,6 +32,7 @@ export const ConfigProvider = ({ children }) => {
           // nocturnalHolidayMultiplier: data.nocturnalHolidayMultiplier,
           diurnalStart: data.diurnalStart,
           diurnalEnd: data.diurnalEnd,
+          id: data.id,
         };
 
         console.log("Datos transformados:", transformedData);
