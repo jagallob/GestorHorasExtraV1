@@ -37,5 +37,50 @@ namespace ExtraHours.API.Model
         [Required]
         [Column("diurnalEnd", TypeName = "time")]
         public TimeSpan diurnalEnd { get; set; }
+
+        // Permitir deserialización flexible para diurnalStart y diurnalEnd
+        [System.Text.Json.Serialization.JsonPropertyName("diurnalStart")]
+        public string diurnalStartString
+        {
+            get => diurnalStart.ToString();
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    // Intenta parsear como HH:mm:ss
+                    if (TimeSpan.TryParse(value, out var ts))
+                    {
+                        diurnalStart = ts;
+                    }
+                    // Intenta parsear como HH:mm
+                    else if (TimeSpan.TryParseExact(value, "hh:mm", null, out var ts2))
+                    {
+                        diurnalStart = ts2;
+                    }
+                }
+            }
+        }
+
+        [System.Text.Json.Serialization.JsonPropertyName("diurnalEnd")]
+        public string diurnalEndString
+        {
+            get => diurnalEnd.ToString();
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    // Intenta parsear como HH:mm:ss
+                    if (TimeSpan.TryParse(value, out var ts))
+                    {
+                        diurnalEnd = ts;
+                    }
+                    // Intenta parsear como HH:mm
+                    else if (TimeSpan.TryParseExact(value, "hh:mm", null, out var ts2))
+                    {
+                        diurnalEnd = ts2;
+                    }
+                }
+            }
+        }
     }
 }
