@@ -34,9 +34,11 @@ namespace ExtraHours.API.Controller
             if (config == null)
                 return BadRequest(new { error = "Datos de configuración no pueden ser nulos" });
 
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var updatedConfig = await _configService.UpdateConfigAsync(config);
             return Ok(updatedConfig);
-
         }
     }
 }
