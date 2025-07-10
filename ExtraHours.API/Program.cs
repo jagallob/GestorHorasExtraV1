@@ -117,25 +117,13 @@ try
     {
         options.AddPolicy(MyAllowSpecificOrigins, policy =>
         {
-            if (builder.Environment.IsDevelopment())
-            {
-                // En desarrollo, usar configuración específica
-                policy.WithOrigins(
-                    "http://localhost:5173", // URL del frontend
-                    "https://localhost:7086" // URL del backend
-                    )
-                      .AllowAnyHeader()
-                      .AllowAnyMethod()
-                      .AllowCredentials();
-            }
-            else
-            {
-                // En producción, más permisivo
-                policy.WithOrigins("https://gestor-horas-extra.vercel.app", "http://localhost:5173")
-                      .AllowAnyHeader()
-                      .AllowAnyMethod()
-                      .AllowCredentials();
-            }
+            policy.WithOrigins(
+                "https://gestor-horas-extra.vercel.app",
+                "http://localhost:5173"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+            // .AllowCredentials(); // Solo si usas cookies, para JWT no es necesario y puede causar problemas de CORS
         });
     });
 
@@ -204,7 +192,7 @@ try
     }
 
     app.UseHttpsRedirection();
-    app.UseCors(MyAllowSpecificOrigins);
+    app.UseCors(MyAllowSpecificOrigins); // Debe ir antes de Auth y Controllers
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
