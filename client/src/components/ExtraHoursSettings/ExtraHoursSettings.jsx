@@ -13,7 +13,7 @@ dayjs.extend(customParseFormat);
 const ExtraHoursSettings = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const { config, setConfig } = useConfig();
+  const { config, setConfig, fetchConfig } = useConfig();
   const { auth } = useAuth();
 
   useEffect(() => {
@@ -58,6 +58,9 @@ const ExtraHoursSettings = () => {
 
       const updatedConfig = await updateConfig(updatedValues, auth.token);
       setConfig(updatedConfig);
+      if (typeof fetchConfig === "function") {
+        await fetchConfig(); // Recarga la configuración desde el backend
+      }
       message.success("Configuración actualizada correctamente");
     } catch (error) {
       console.error("=== ERROR DETAILS ===");
