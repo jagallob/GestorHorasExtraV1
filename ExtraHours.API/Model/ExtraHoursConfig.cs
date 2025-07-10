@@ -14,21 +14,21 @@ namespace ExtraHours.API.Model
         [Column("weeklyExtraHoursLimit")]
         public double weeklyExtraHoursLimit { get; set; }
 
-        [Required]
-        [Column("diurnalMultiplier")]
-        public double diurnalMultiplier { get; set; }
+        // [Required]
+        // [Column("diurnalMultiplier")]
+        // public double diurnalMultiplier { get; set; }
 
-        [Required]
-        [Column("nocturnalMultiplier")]
-        public double nocturnalMultiplier { get; set; }
+        // [Required]
+        // [Column("nocturnalMultiplier")]
+        // public double nocturnalMultiplier { get; set; }
 
-        [Required]
-        [Column("diurnalHolidayMultiplier")]
-        public double diurnalHolidayMultiplier { get; set; }
+        // [Required]
+        // [Column("diurnalHolidayMultiplier")]
+        // public double diurnalHolidayMultiplier { get; set; }
 
-        [Required]
-        [Column("nocturnalHolidayMultiplier")]
-        public double nocturnalHolidayMultiplier { get; set; }
+        // [Required]
+        // [Column("nocturnalHolidayMultiplier")]
+        // public double nocturnalHolidayMultiplier { get; set; }
 
         [Required]
         [Column("diurnalStart", TypeName = "time")]
